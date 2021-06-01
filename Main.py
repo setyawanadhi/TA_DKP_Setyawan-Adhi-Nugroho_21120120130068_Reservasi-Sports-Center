@@ -44,6 +44,15 @@ def moveToUser():
 	raiseFrame(userFrame)
 def register():
 	entries = []
+	if len(name.get()) == 0:
+		messagebox.showerror("ERROR","BELUM MENGISI NAMA")
+		return
+	if len(username.get()) == 0:
+		messagebox.showerror("ERROR","BELUM MENGISI USERNAME")
+		return
+	if len(password.get()) == 0:
+		messagebox.showerror("ERROR","BELUM MENGISI PASSWORD")
+		return
 	with open ("users.txt",'a',newline="") as userFile:
 		writer = csv.writer(userFile)
 		writeList = [name.get(),username.get(),password.get()]
@@ -81,6 +90,7 @@ def login():
 			if len(row)>0:
 				if username.get()==row[1] and password.get()==row[2]:
 					print(row[0]+" has logged in!")
+					messagebox.showinfo("Success!",row[0]+" has logged in!")
 					# Calendar View
 					global jadwalFrame
 					jadwalFrame = tk.Frame(userFrame, borderwidth=5, bg="skyblue")
@@ -88,6 +98,9 @@ def login():
 					viewCalendar = Jadwal(jadwalFrame, {row[0]})
 					name.set(row[0])
 					raiseFrame(userFrame)
+				else:
+					messagebox.showinfo("ERROR!","Akun Belum Terdaftar")
+					return
 					
 def logOut():
 	#Clear Entry boxes
